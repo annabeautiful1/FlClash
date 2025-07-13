@@ -13,6 +13,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import 'auth_page.dart';
 import 'controller.dart';
 import 'pages/pages.dart';
 
@@ -182,7 +183,9 @@ class ApplicationState extends ConsumerState<Application> {
               home: child,
             );
           },
-          child: const HomePage(),
+          child: const AuthPage(
+            child: HomePage(),
+          ),
         ),
       ),
     );
