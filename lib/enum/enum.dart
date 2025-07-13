@@ -420,8 +420,6 @@ enum PageLabel {
   requests,
   resources,
   connections,
-  login,
-  register,
 }
 
 enum RuleAction {

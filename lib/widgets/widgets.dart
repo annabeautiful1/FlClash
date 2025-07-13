@@ -1,7 +1,6 @@
 export 'animate_grid.dart';
-export 'auth/auth.dart';
-export 'builder.dart';
 export 'pop_scope.dart';
+export 'builder.dart';
 export 'card.dart';
 export 'chip.dart';
 export 'color_scheme_box.dart';

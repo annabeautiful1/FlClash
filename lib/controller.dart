@@ -587,10 +587,6 @@ class AppController {
     _ref.read(currentPageLabelProvider.notifier).value = pageLabel;
   }
 
-  navigateToPage(PageLabel pageLabel) {
-    toPage(pageLabel);
-  }
-
   toProfiles() {
     toPage(PageLabel.profiles);
   }
