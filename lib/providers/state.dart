@@ -66,10 +66,15 @@ NavigationItemsState navigationsState(Ref ref) {
   final openLogs = ref.watch(appSettingProvider).openLogs;
   final hasProxies = ref.watch(
       currentGroupsStateProvider.select((state) => state.value.isNotEmpty));
+  final isLoggedIn = ref.watch(authStateProvider.select((state) => state.isLoggedIn));
+  final isDesktop = system.isDesktop;
+  
   return NavigationItemsState(
     value: navigation.getItems(
       openLogs: openLogs,
       hasProxies: hasProxies,
+      isLoggedIn: isLoggedIn,
+      isDesktop: isDesktop,
     ),
   );
 }

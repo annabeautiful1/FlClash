@@ -9,8 +9,34 @@ class Navigation {
   List<NavigationItem> getItems({
     bool openLogs = false,
     bool hasProxies = false,
+    bool isLoggedIn = true,
+    bool isDesktop = false,
   }) {
-    return [
+    final items = <NavigationItem>[];
+    
+    // Add auth pages for desktop when not logged in
+    if (isDesktop && !isLoggedIn) {
+      items.addAll([
+        const NavigationItem(
+          icon: Icon(Icons.login),
+          label: PageLabel.login,
+          view: LoginView(
+            key: GlobalObjectKey(PageLabel.login),
+          ),
+        ),
+        const NavigationItem(
+          icon: Icon(Icons.person_add),
+          label: PageLabel.register,
+          view: RegisterView(
+            key: GlobalObjectKey(PageLabel.register),
+          ),
+        ),
+      ]);
+      return items;
+    }
+    
+    // Regular navigation items for logged in users
+    items.addAll([
       const NavigationItem(
         keep: false,
         icon: Icon(Icons.space_dashboard),
@@ -96,7 +122,9 @@ class Navigation {
         ),
         modes: [NavigationItemMode.desktop, NavigationItemMode.mobile],
       ),
-    ];
+    ]);
+    
+    return items;
   }
 
   Navigation._internal();
