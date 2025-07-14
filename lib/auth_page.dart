@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'dart:async';
-import 'sspanel_api_service.dart';
+import 'auth/sspanel_api_service.dart';
 
 /// SSPanel 集成的认证页面
 class AuthPage extends StatefulWidget {
