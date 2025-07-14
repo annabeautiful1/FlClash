@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:dio/dio.dart';
+import 'package:flutter/foundation.dart';
 
 /// SSPanel API 服务类，负责与 bbxy.buzz 后端通信
 class SSPanelApiService {
@@ -20,18 +21,20 @@ class SSPanelApiService {
         'User-Agent': 'FlClash-App/1.0',
       },
     ));
+  }
 
-    // 添加请求日志（仅在调试模式）
-    _dio.interceptors.add(LogInterceptor(
-      requestBody: true,
-      responseBody: true,
-      logPrint: (obj) => print('[SSPanel API] $obj'),
-    ));
+  /// 简单的调试日志输出
+  void _debugLog(String message) {
+    if (kDebugMode) {
+      print('[SSPanel API] $message');
+    }
   }
 
   /// 登录 API 调用
   Future<ApiResponse> login(String email, String password, {bool rememberMe = false}) async {
     try {
+      _debugLog('发起登录请求: $email');
+      
       final response = await _dio.post(
         loginEndpoint,
         data: {
@@ -44,10 +47,13 @@ class SSPanelApiService {
         ),
       );
 
+      _debugLog('登录响应状态: ${response.statusCode}');
       return _parseResponse(response.data);
     } on DioException catch (e) {
+      _debugLog('登录网络错误: ${e.type}');
       return ApiResponse.error(_handleDioError(e));
     } catch (e) {
+      _debugLog('登录异常: $e');
       return ApiResponse.error('登录失败：$e');
     }
   }
@@ -61,6 +67,8 @@ class SSPanelApiService {
     String? inviteCode,
   }) async {
     try {
+      _debugLog('发起注册请求: $email');
+      
       final data = {
         'name': name.trim(),
         'email': email.trim().toLowerCase(),
@@ -80,10 +88,13 @@ class SSPanelApiService {
         ),
       );
 
+      _debugLog('注册响应状态: ${response.statusCode}');
       return _parseResponse(response.data);
     } on DioException catch (e) {
+      _debugLog('注册网络错误: ${e.type}');
       return ApiResponse.error(_handleDioError(e));
     } catch (e) {
+      _debugLog('注册异常: $e');
       return ApiResponse.error('注册失败：$e');
     }
   }
@@ -91,6 +102,8 @@ class SSPanelApiService {
   /// 发送邮箱验证码
   Future<ApiResponse> sendEmailCode(String email) async {
     try {
+      _debugLog('发送验证码请求: $email');
+      
       final response = await _dio.post(
         sendEmailCodeEndpoint,
         data: {
@@ -101,10 +114,13 @@ class SSPanelApiService {
         ),
       );
 
+      _debugLog('验证码响应状态: ${response.statusCode}');
       return _parseResponse(response.data);
     } on DioException catch (e) {
+      _debugLog('验证码网络错误: ${e.type}');
       return ApiResponse.error(_handleDioError(e));
     } catch (e) {
+      _debugLog('验证码异常: $e');
       return ApiResponse.error('发送验证码失败：$e');
     }
   }
